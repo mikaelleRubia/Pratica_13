@@ -30,32 +30,76 @@ using namespace std;
         bool tipo_viagem;
         double valor_viagem = 80.0; // valor_viagem = 80 para cada
     };
-    
-    vector<Viagem> viagens;
 
-    string total_arrecadado(Viagem viagens){
+
+    string total_arrecadado(vector <Viagem> viagens){
         double valor_total =0;
-        string data_escolhida, hora_escolhida;
-
-        cout << "Digite a data da viagem" << endl;
-        cin >> data_escolhida;
+        int dia_escolhido, mes_escolhido, ano_escolhido;
+        string horario_escolhido;
 
         cout << "Digite o horario da viagem" <<endl;
-        cin >> hora_escolhida;
+        cin >> horario_escolhido;
+
+        cout << "Digite a dia da viagem" << endl;
+        cin >> dia_escolhido;
+
+        cout << "Digite o mes da viagem" << endl;
+        cin >> mes_escolhido;
+
+        cout << "Digite o ano da viagem" <<endl;
+        cin >> ano_escolhido;
+
 
         for(int i=0; i< 40; i ++){
-            if(viagens.data.dia[i] == data_escolhida && viagens.hora_viagem[i] == hora_escolhida){
+            if(viagens[i].data.dia == dia_escolhido && viagens[i].data.mes == mes_escolhido && viagens[i].data.ano == ano_escolhido && viagens[i].data.hora == horario_escolhido){
                 for(int i=0; i< 40; i ++){
-                    if(viagens.poltrona[i].disponivel == false){
-                        valor_total += viagens.valor_viagem;
+                    if(viagens[i].poltrona[i].disponivel == false){
+                        valor_total += viagens[i].valor_viagem;
                     }; 
                 };
             };
         }; 
-
          cout <<"total: " << valor_total <<endl;
+    };
+
+
+    string total_arrecadado_por_mes(vector <Viagem> viagens){
+        double valor_total =0;
+        int mes_escolhido;
+
+        cout << "Digite o mes da viagem" << endl;
+        cin >> mes_escolhido;
+
+        for(int i=0; i< 40; i ++){
+            if(viagens[i].data.mes == mes_escolhido){
+                for(int i=0; i< 40; i ++){
+                    if(viagens[i].poltrona[i].disponivel == false){
+                        valor_total += viagens[i].valor_viagem;
+                    }; 
+                };
+            };
+        }; 
+         cout <<"total do mês: " << valor_total <<endl;
+    };
+
+
+
+    string busca_passageiro(vector <Viagem> viagens){
+        double valor_total =0;
+        string nome_passageiro;
+
+        cout << "Digite o nome do passageiro" << endl;
+        cin >> nome_passageiro;
+
+        for(int i=0; i< 40; i ++){
+            if(viagens[i].poltrona[i].passageiro == nome_passageiro){
+
+            }; 
+         cout <<"total do mês: " << valor_total <<endl;
+        };
 
     };
+
 
 int main(void){
 
