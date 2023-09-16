@@ -92,10 +92,13 @@ using namespace std;
         cin >> nome_passageiro;
 
         for(int i=0; i< 40; i ++){
-            if(viagens[i].poltrona[i].passageiro == nome_passageiro){
-
+            if(viagens[i].poltrona[i].passageiro.name == nome_passageiro){
+                cout << "Nome: " << viagens[i].poltrona[i].passageiro.name <<
+                "\n Cpf: " << viagens[i].poltrona[i].passageiro.cpf <<
+                "\n Idade: "<< viagens[i].poltrona[i].passageiro.idade <<
+                "\n Destino: " << viagens[i].destino_viagem<<
+                "\n Data: "<< viagens[i].data.dia <<"/"<< viagens[i].data.mes << "/" << viagens[i].data.ano <<endl;
             }; 
-         cout <<"total do mês: " << valor_total <<endl;
         };
 
     };
