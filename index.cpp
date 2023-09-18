@@ -29,42 +29,56 @@ using namespace std;
         double valor_viagem = 80.0; // valor_viagem = 80 para cada
     };
 
+    int Menu()
+        {
+            cout << "========================================\n";
+            cout << "1 - Adicionar Viagem\n";
+            cout << "2 - Total arrecadado\n";
+            cout << "3 - Total arrecadado por mês \n";
+            cout << "4 - Buscar passageiro\n";
+            cout << "0 - Sair\n";
 
-    void add_viagem(Viagem nova_viagem []){
+            int opcao;
+            wcout << L"\nEscolha uma opção: ";
+            cin >> opcao;
+
+            return opcao;
+        };
+   
+
+    void add_viagem(Viagem nova_viagem [], int cont_passagens){
         int poltrona_numero = 0;
+        int tamanho = 2;
         bool salva_poltrona = false;
-        char resposta;
+        
+        for(int i=0; i<tamanho; i++) {  
+  
+            cout << "Distino, ida  ou volta da viagem ?"<< i << endl;
+            cin >> nova_viagem[i].destino_viagem;
 
-              
-        for(int i = 0; i < 2; i++){
+            cout << "Digite a dia" <<endl;
+            cin >> nova_viagem[i].data.dia;
 
-            for(int j = 1; j < 3; j++){
+            cout << "Digite mês;" <<endl;
+            cin >> nova_viagem[i].data.mes;
 
-                cout << "Distino, ida  ou volta ?" <<endl;
-                cin >> nova_viagem[i].destino_viagem;
+            if(nova_viagem[i].destino_viagem == "ida"){
+                cout << "Para a Ida escolha o horario, 6:00, 7:00, 8:00, 9:00, 11:00, " <<endl;
+                cin >> nova_viagem[i].data.hora;
+            }else if(nova_viagem[i].destino_viagem == "volta"){
+                cout << "para a Volta escolha o horario, 14:00, 15:00, 16:00, 17:00, 18:00, " <<endl;
+                cin >>nova_viagem[i].data.hora;
+            };
 
-                cout << "Digite o nome do passageiro:" <<endl;
+            for(int j = 0; j <= tamanho; j++){
+                cout << "Digite o nome do passageiro:" << j <<"da viagem "<< i <<endl;
                 cin >> nova_viagem[i].poltrona[j].passageiro.nome;
 
-                cout << "Digite o cpf do passageiro;" <<endl;
+                cout << "Digite o cpf do passageiro;"  << j <<"da viagem "<< i << endl;
                 cin >> nova_viagem[i].poltrona[j].passageiro.cpf;
 
                 cout << "Digite a idade do passageiro;" <<endl;
                 cin >> nova_viagem[i].poltrona[j].passageiro.cpf;
-
-
-                if(nova_viagem[i].destino_viagem == "ida"){
-                    cout << "Para a Ida escolha o horario, 6:00, 7:00, 8:00, 9:00, 11:00, " <<endl;
-                    cin >> nova_viagem[i].data.hora;
-                }else if(nova_viagem[i].destino_viagem == "volta"){
-                    cout << "para a Volta escolha o horario, 14:00, 15:00, 16:00, 17:00, 18:00, " <<endl;
-                    cin >>nova_viagem[i].data.hora;
-                };
-                cout << "Digite a dia" <<endl;
-                cin >> nova_viagem[i].data.dia;
-
-                cout << "Digite mês;" <<endl;
-                cin >> nova_viagem[i].data.mes;
 
                 do{
                     cout << "Digite a poltrona (1 -> 40)" <<endl;
@@ -72,111 +86,92 @@ using namespace std;
 
                     if(nova_viagem[i].poltrona[poltrona_numero].disponivel == true){
                         nova_viagem[i].poltrona[poltrona_numero].disponivel = false;
-
+                        cont_passagens ++;
                         salva_poltrona = true;
 
                     }else if(nova_viagem[i].poltrona[poltrona_numero].disponivel == false){
                             cout << "a poltrona está ocupada, escolha outra diferente de "<< poltrona_numero <<endl;
                             salva_poltrona = false;
-                    }
+                    };
 
                 }while (salva_poltrona == false);
-
-                cout << " Deseja Adicionar outro produto (s/n)? " << endl;
-                cin>> resposta;
-
-                if(resposta != 's'){
-                    break;
-                };
-      
+        
             };
+
+
+        }; 
+
+    };
+
+    string total_arrecadado(Viagem nova_viagem [], int cont_passagens){
+        int valor_total=0;  
+
+        valor_total  = cont_passagens * 80;
+        cout << "======================================" <<endl;
+        cout << "Total arrecadado" <<endl;
+
+        cout <<"Total de passagens: "<< valor_total << endl; 
+    };
+
+
+    string total_arrecadado_por_mes(Viagem nova_viagem []){
+        int cont_=0;
+        string mes_escolhido;
+
+        cout << "Digite o mes da viagem" << endl;
+        cin >> mes_escolhido;
+
+        for(int i=0; i< 10; i++){
+            for(int j=0; j< 40; j++){
+                if(nova_viagem [i].data.mes == mes_escolhido && nova_viagem[i].poltrona[j].disponivel == false){
+                        cont_ ++;
+                };
+            };
+        };
+
+        cout <<"Total de passagens \n"
+        "Mês: "<< mes_escolhido <<
+        "\nAno: 2023"
+        "\nTotal: "<< cont_*80 <<endl;
+    };
+
+
+
+    string busca_passageiro(Viagem nova_viagem[]){
+        string nome_passageiro;
+
+        cout << "Digite o nome do passageiro" << endl;
+        cin >> nome_passageiro;
+
+        for(int i=0; i< 10; i ++){
+            for(int j=0; j< 40; j ++){
+                if(nova_viagem[i].poltrona[j].passageiro.nome == nome_passageiro){
+                    cout << "Nome: " << nova_viagem[i].poltrona[j].passageiro.nome <<
+                    "\n Cpf: " << nova_viagem[i].poltrona[j].passageiro.cpf <<
+                    "\n Idade: "<< nova_viagem[i].poltrona[j].passageiro.idade <<
+                    "\n Destino: " << nova_viagem[i].destino_viagem<<
+                    "\n Data: "<< nova_viagem[i].data.dia <<"/"<< nova_viagem[i].data.mes << "/" << nova_viagem[i].data.ano <<endl;
+                };
+            };     
         };
 
     };
 
-    // string total_arrecadado(vector <Viagem> viagens){
-    //     double valor_total =0;
-    //     string dia_escolhido, mes_escolhido, ano_escolhido;
-    //     string horario_escolhido;
-
-    //     cout << "Digite o horario da viagem" <<endl;
-    //     cin >> horario_escolhido;
-
-    //     cout << "Digite a dia da viagem" << endl;
-    //     cin >> dia_escolhido;
-
-    //     cout << "Digite o mes da viagem" << endl;
-    //     cin >> mes_escolhido;
-
-    //     cout << "Digite o ano da viagem" <<endl;
-    //     cin >> ano_escolhido;
-
-
-    //     for(int i=0; i< 40; i ++){
-    //         if(viagens[i].data.dia == dia_escolhido && viagens[i].data.mes == mes_escolhido && viagens[i].data.ano == ano_escolhido && viagens[i].data.hora == horario_escolhido){
-    //             for(int i=0; i< viagens.size(); i ++){
-    //                 for(int j=0; j< 40; j ++){
-    //                     if(viagens[i].poltrona[j].disponivel == false){
-    //                         valor_total += viagens[i].valor_viagem;
-    //                     };
-    //                 };     
-    //             };
-    //         };
-    //     }; 
-    //      cout <<"total: " << valor_total <<endl;
-    // };
-
-
-    // string total_arrecadado_por_mes(vector <Viagem> viagens){
-    //     double valor_total =0;
-    //     string mes_escolhido;
-
-    //     cout << "Digite o mes da viagem" << endl;
-    //     cin >> mes_escolhido;
-
-    //     for(int i=0; i< 40; i ++){
-    //         if(viagens[i].data.mes == mes_escolhido){
-    //             for(int i=0; i< 40; i ++){
-    //                 if(viagens[i].poltrona[i].disponivel == false){
-    //                     valor_total += viagens[i].valor_viagem;
-    //                 }; 
-    //             };
-    //         };
-    //     }; 
-    //      cout <<"total do mês: " << valor_total <<endl;
-    // };
-
-
-
-    // string busca_passageiro(vector <Viagem> viagens){
-    //     double valor_total =0;
-    //     string nome_passageiro;
-
-    //     cout << "Digite o nome do passageiro" << endl;
-    //     cin >> nome_passageiro;
-
-    //     for(int i=0; i< viagens.size(); i ++){
-    //         for(int j=0; j< 40; j ++){
-    //             if(viagens[i].poltrona[j].passageiro.nome == nome_passageiro){
-    //                 cout << "Nome: " << viagens[i].poltrona[i].passageiro.nome <<
-    //                 "\n Cpf: " << viagens[i].poltrona[i].passageiro.cpf <<
-    //                 "\n Idade: "<< viagens[i].poltrona[i].passageiro.idade <<
-    //                 "\n Destino: " << viagens[i].destino_viagem<<
-    //                 "\n Data: "<< viagens[i].data.dia <<"/"<< viagens[i].data.mes << "/" << viagens[i].data.ano <<endl;
-    //             };
-    //         };     
-    //     };
-
-    // };
-
 
 int main(void){
 
-    Viagem viagens[10];
+    Viagem viagens[2];
+    int cont_passagens =0;
 
-    add_viagem(viagens);
+    add_viagem(viagens, cont_passagens);
 
+    total_arrecadado(viagens);
 
+    total_arrecadado_por_mes(viagens);
+
+    busca_passageiro(viagens);
+ 
+        
     return 0;
 
 
