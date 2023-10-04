@@ -122,10 +122,10 @@ void add_viagem(vector <Viagem> &viagens){
 
         do{
 
-            cout << "Digite o nome do passageiro:" << j << "da viagem " << endl;
+            cout << "Digite o nome do passageiro:"  << "da viagem " << endl;
             cin >> nova_viagem.poltrona[j].passageiro.nome;
 
-            cout << "Digite o cpf do passageiro;" << j << "da viagem " << endl;
+            cout << "Digite o cpf do passageiro;" << "da viagem " << endl;
             cin >> nova_viagem.poltrona[j].passageiro.cpf;
 
             cout << "Digite a idade do passageiro;" << endl;
