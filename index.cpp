@@ -7,7 +7,8 @@ using namespace std;
 
 struct Passageiro_onibus
 {
-    string nome, cpf, idade;
+    string nome, cpf;
+    int idade;
 };
 
 struct Poltrona
@@ -37,7 +38,7 @@ void add_viagem(vector<Viagem> &viagens);
 string busca_passageiro(vector <Viagem> &viagens);
 string total_arrecadado_por_mes(vector <Viagem> &viagens);
 string busca_passageiro_poltrona(vector <Viagem> &viagens);
-string media_idade(vector <Viagem> &viagens);
+int media_idade(vector <Viagem> &viagens);
 
 int main(){
     vector<Viagem> viagens;
@@ -45,7 +46,7 @@ int main(){
     busca_passageiro(viagens);
     total_arrecadado_por_mes(viagens);
     busca_passageiro_poltrona(viagens);
-    media_idade(viagens);
+    cout << media_idade(viagens) <<endl;
 
 
     return 0;
@@ -204,7 +205,7 @@ string total_arrecadado_por_mes(vector <Viagem> &viagens){
     "\nTotal: R$"<< (cont_*80)<<endl;
 };
 
-string busca_passageiro_poltrona(vector <Viagem> &viagens){
+string busca_passageiro_poltrona(vector<Viagem> &viagens) {
     string nome_passageiro;
     int poltrona, dia, mes, ano;
 
@@ -227,8 +228,8 @@ string busca_passageiro_poltrona(vector <Viagem> &viagens){
 
     for (Viagem v : viagens) {
         if (v.data.dia == dia && v.data.mes == mes && v.data.ano == ano) {
-            for(int i=0; i< 40; i ++){
-                if (v.poltrona[i].disponivel == false && v.poltrona[i].passageiro.nome == nome_passageiro) {
+            for (int i = 0; i < 40; i++) {
+                if (!v.poltrona[i].disponivel && v.poltrona[i].passageiro.nome == nome_passageiro) {
                     cout << "Nome: " << v.poltrona[i].passageiro.nome <<
                         "\nCpf: " << v.poltrona[i].passageiro.cpf <<
                         "\nIdade: " << v.poltrona[i].passageiro.idade <<
@@ -244,22 +245,22 @@ string busca_passageiro_poltrona(vector <Viagem> &viagens){
 }
 
 
-
-
-string media_idade(vector <Viagem> &viagens){
-    string nome_passageiro;
-    int soma = 0; 
+int media_idade(vector<Viagem> &viagens) {
+    int soma = 0;
     int cont = 0;
+    int resultado = 0;
 
     cout << "------------MEDIA DA IDADE DOS PASSAGEIROS------------" << endl;
 
     for (Viagem v : viagens) {
-        for(int i=0; i< 40; i ++){
-            if(v.poltrona[i].disponivel == false){
-                soma += atol(v.poltrona[i].passageiro.idade.c_str());
-                cont ++;
+        for (int i = 0; i < 40; i++) {
+            if (!v.poltrona[i].disponivel) {
+                soma += v.poltrona[i].passageiro.idade;
+                cont++;
             }
-           }
+        }
     }
-    cout << "total " << (soma /cont) << endl;
+    resultado = soma / cont;
+    return resultado;
+
 }
